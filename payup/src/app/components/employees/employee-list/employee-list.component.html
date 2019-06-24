@@ -1,0 +1,130 @@
+<div class="card card-default" id="card_employees">
+  <div class="card-header">
+    <div class="d-flex align-items-center">
+      <span>Employee Benefits Summary</span>
+      <h5 class="mr-auto p-0"></h5>
+      <div class="btn-group" role="group">
+        <button
+          class="btn btn-primary btn-sm"
+          (click)="onAddEmployee()"
+          *ngIf="!showForm"
+        >
+          Add
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div id="employees" *ngIf="!showForm">
+    <ul class="list-group pull-down" id="employee-list">
+      <app-employee-list-item
+        *ngFor="let emp of employees"
+        [employee]="emp"
+        (onDeleteEmployee)="handleDeleteEmployee($event)"
+        (onEditEmployee)="handleEditEmployee($event)"
+      ></app-employee-list-item>
+    </ul>
+  </div>
+  <div class="card-body" *ngIf="showForm">
+    <div id="employeeForm">
+      <form [formGroup]="employeeForm" (ngSubmit)="onSubmitForm()">
+        <div class="form-group">
+          <input
+            type="text"
+            class="form-control"
+            formControlName="firstName"
+            placeholder="First name"
+          />
+        </div>
+        <div class="form-group">
+          <input
+            type="text"
+            class="form-control"
+            formControlName="lastName"
+            placeholder="Last name"
+          />
+        </div>
+        <input type="hidden" formControlName="id" />
+
+        <hr />
+        <div class="row col-md-12">
+          <div class="col" formArrayName="dependents">
+            <div
+              class="card card-default card_dependent mb-2"
+              *ngFor="
+                let dependentCtrl of employeeForm.get('dependents').controls;
+                let i = index
+              "
+              [formGroupName]="i"
+            >
+              <div class="card-header p-1 pl-2">
+                <div class="d-flex align-items-center">
+                  <span>Dependent {{ i + 1 }}</span>
+                  <h5 class="mr-auto p-0"></h5>
+                  <div class="btn-group" role="group">
+                    <button
+                      class="btn btn-primary"
+                      (click)="onDeleteDependent()"
+                    >
+                      X
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="form-group">
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="First name"
+                    formControlName="firstName"
+                  />
+                </div>
+                <div class="form-group">
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Last name"
+                    formControlName="lastName"
+                  />
+                </div>
+
+                <div class="form-group">
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Relationship"
+                    formControlName="relationship"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col">
+            <button
+              type="button"
+              class="btn btn-success btn-block btn-sm"
+              (click)="onAddDependent()"
+            >
+              Add Dependent
+            </button>
+
+            <button
+              type="submit"
+              class="btn btn-primary btn-block btn-sm"
+              [disabled]="!employeeForm.valid"
+            >
+              Submit Employee
+            </button>
+            <button type="button" class="btn btn-link" (click)="onCancelForm()">
+              Cancel
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

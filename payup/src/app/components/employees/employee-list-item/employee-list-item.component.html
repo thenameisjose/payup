@@ -1,0 +1,58 @@
+<li class="list-group-item">
+  <div class="row w-100">
+    <div class="col-12 col-sm-12 col-md-3 px-10">
+      <img
+        src="../../../../assets/user.png"
+        alt="{{ employee.firstName }} {{ employee.LastName }}"
+        class="img-fluid rounded-circle d-block mx-auto"
+      />
+    </div>
+    <div class="col-12 col-sm-12 col-md-4 text-md-left text-center">
+      <span class="name lead"
+        >{{ employee.firstName }} {{ employee.lastName }}</span
+      >
+      <br />
+      <span class="text-muted small"
+        >Cost of Benefits (Annual): {{ employee.benefitCost }}</span
+      >
+      <br />
+      <span class="text-muted small"
+        >Cost of Benefits (Period): {{ employee.benefitCost }}</span
+      >
+      <br />
+      <span class="text-muted small"
+        >Gross per period: {{ employee.grossPerPeriod }}</span
+      >
+      <br />
+    </div>
+    <div class="col-12 col-sm-12 col-md-5 text-md-left text-center">
+      <span class="text-muted small"
+        >Total dependents: {{ employee.dependents.length }}</span
+      >
+      <br />
+      <ul class="list-group">
+        <li *ngFor="let dep of employee.dependents" class="list-group-item p-1">
+          <span class="text-muted small"
+            >{{ dep.firstName }} {{ dep.lastName }}</span
+          >
+          <span class="text-muted small"> ({{ dep.relationship }})</span>
+        </li>
+      </ul>
+      <br />
+      <button
+        type="button"
+        class="btn btn-primary btn-block btn-sm"
+        (click)="onEditEmployee.emit(employee)"
+      >
+        Edit
+      </button>
+      <button
+        type="button"
+        class="btn btn-danger btn-block btn-sm"
+        (click)="onDeleteEmployee.emit(employee.id)"
+      >
+        Delete
+      </button>
+    </div>
+  </div>
+</li>

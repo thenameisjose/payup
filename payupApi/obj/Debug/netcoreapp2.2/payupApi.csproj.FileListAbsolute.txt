@@ -1,0 +1,14 @@
+/Users/Zod/Documents/work/paylocity/payupApi/bin/Debug/netcoreapp2.2/payupApi.deps.json
+/Users/Zod/Documents/work/paylocity/payupApi/bin/Debug/netcoreapp2.2/payupApi.runtimeconfig.json
+/Users/Zod/Documents/work/paylocity/payupApi/bin/Debug/netcoreapp2.2/payupApi.runtimeconfig.dev.json
+/Users/Zod/Documents/work/paylocity/payupApi/bin/Debug/netcoreapp2.2/payupApi.dll
+/Users/Zod/Documents/work/paylocity/payupApi/bin/Debug/netcoreapp2.2/payupApi.pdb
+/Users/Zod/Documents/work/paylocity/payupApi/obj/Debug/netcoreapp2.2/payupApi.csprojAssemblyReference.cache
+/Users/Zod/Documents/work/paylocity/payupApi/obj/Debug/netcoreapp2.2/payupApi.csproj.CoreCompileInputs.cache
+/Users/Zod/Documents/work/paylocity/payupApi/obj/Debug/netcoreapp2.2/payupApi.RazorAssemblyInfo.cache
+/Users/Zod/Documents/work/paylocity/payupApi/obj/Debug/netcoreapp2.2/payupApi.RazorAssemblyInfo.cs
+/Users/Zod/Documents/work/paylocity/payupApi/obj/Debug/netcoreapp2.2/payupApi.AssemblyInfoInputs.cache
+/Users/Zod/Documents/work/paylocity/payupApi/obj/Debug/netcoreapp2.2/payupApi.AssemblyInfo.cs
+/Users/Zod/Documents/work/paylocity/payupApi/obj/Debug/netcoreapp2.2/payupApi.RazorTargetAssemblyInfo.cache
+/Users/Zod/Documents/work/paylocity/payupApi/obj/Debug/netcoreapp2.2/payupApi.dll
+/Users/Zod/Documents/work/paylocity/payupApi/obj/Debug/netcoreapp2.2/payupApi.pdb
