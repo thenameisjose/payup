@@ -7,22 +7,38 @@
         class="img-fluid rounded-circle d-block mx-auto"
       />
     </div>
-    <div class="col-12 col-sm-12 col-md-4 text-md-left text-center">
+    <div class="col-12 col-sm-12 col-md-4 text-md-left ">
       <span class="name lead"
         >{{ employee.firstName }} {{ employee.lastName }}</span
       >
       <br />
-      <span class="text-muted small"
-        >Cost of Benefits (Annual): {{ employee.benefitCost }}</span
-      >
-      <br />
-      <span class="text-muted small"
-        >Cost of Benefits (Period): {{ employee.benefitCost }}</span
-      >
-      <br />
-      <span class="text-muted small"
-        >Gross per period: {{ employee.grossPerPeriod }}</span
-      >
+      <table class="table table-sm">
+        <thead>
+          <tr>
+            <th scope="col"></th>
+            <th scope="col">Period</th>
+            <th scope="col">Annual</th>
+            
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">Total Cost</th>
+            <td>{{employee.benefitSummary.paymentAmount + (employee.benefitSummary.employeeBenefitCost / employee.benefitSummary.paymentPeriods) + (employee.benefitSummary.dependentBenefitCost / employee.benefitSummary.paymentPeriods) | currency: 'USD' }} </td>
+            <td>{{ (employee.benefitSummary.paymentAmount * employee.benefitSummary.paymentPeriods) + employee.benefitSummary.employeeBenefitCost + employee.benefitSummary.dependentBenefitCost | currency : 'USD' }}</td>
+          </tr>
+          <tr>
+            <th scope="row">Benefit Cost</th>
+            <td>{{(employee.benefitSummary.employeeBenefitCost / employee.benefitSummary.paymentPeriods) + (employee.benefitSummary.dependentBenefitCost / employee.benefitSummary.paymentPeriods) | currency: 'USD' }}</td>
+            <td>{{ employee.benefitSummary.employeeBenefitCost + employee.benefitSummary.dependentBenefitCost | currency : 'USD' }}</td>
+          </tr>
+          <tr>
+            <th scope="row">Dependent Cost</th>            
+            <td>{{(employee.benefitSummary.dependentBenefitCost / employee.benefitSummary.paymentPeriods) | currency: 'USD' }}</td>
+            <td>{{ employee.benefitSummary.dependentBenefitCost | currency : 'USD' }}</td>
+          </tr>
+        </tbody>
+      </table>
       <br />
     </div>
     <div class="col-12 col-sm-12 col-md-5 text-md-left text-center">

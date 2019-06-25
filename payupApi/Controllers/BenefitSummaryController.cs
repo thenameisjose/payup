@@ -13,72 +13,103 @@ namespace payupApi.Controllers
     [ApiController]
     public class BenefitSummaryController : ControllerBase
     {
-        IBenefitService _benefitService;
+        IEmployeeRepository _employeeRepository;
+        IBenefitManager _benefitManager;
 
-        public BenefitSummaryController(IBenefitService benefitService)
+        public BenefitSummaryController(IEmployeeRepository employeeRepository, IBenefitManager benefitManager)
         {
-            _benefitService = benefitService;
+            _employeeRepository = employeeRepository;
+            _benefitManager = benefitManager;
         }
 
         [HttpGet]
         public async Task<ActionResult> Get()
         {
-            var employees = await _benefitService.GetEmployees();
-            return Ok(employees);
+            var employees = await _employeeRepository.ListAsync();
+            var models = employees.Select(e => MapToSummaryVM(e));
+            return Ok(models);
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult> Get(int id)
+        public async Task<ActionResult> Get(Guid id)
         {
-            return Ok(new BenefitSummaryVM() { Id = Guid.NewGuid(), FirstName = "Clark", LastName = "Kent", Dependents = new List<DependentVM>() });
+            var employee = await _employeeRepository.GetAsync(id);
+            return Ok(MapToSummaryVM(employee));
         }
 
         [HttpPost]
-        public async Task<ActionResult> Post([FromBody] BenefitSummaryVM value)
+        public async Task<ActionResult> Post([FromBody] BenefitSummaryVM summary)
         {
             var employee = new Employee()
             {
-                FirstName = value.FirstName,
-                LastName = value.LastName
+                FirstName = summary.FirstName,
+                LastName = summary.LastName
             };
-            employee.Dependents = value.Dependents.Select(d => new Dependent()
+            employee.Dependents = summary.Dependents.Select(d => new Dependent()
             {
                 FirstName = d.FirstName,
                 LastName = d.LastName,
                 Relationship = d.Relationship
             }).ToList();
-            await _benefitService.AddEmployeeAsync(employee);
+            await _employeeRepository.AddAsync(employee);
 
-            return Ok(employee);
+
+            return Ok(MapToSummaryVM(employee));
         }
 
         [HttpPut]
-        public async Task<ActionResult> Put([FromBody] BenefitSummaryVM value)
+        public async Task<ActionResult> Put([FromBody] BenefitSummaryVM summary)
         {
             var employee = new Employee()
             {
-                Id = value.Id.GetValueOrDefault(),
-                FirstName = value.FirstName,
-                LastName = value.LastName
+                Id = summary.Id.GetValueOrDefault(),
+                FirstName = summary.FirstName,
+                LastName = summary.LastName
             };
-            employee.Dependents = value.Dependents.Select(d => new Dependent()
+            employee.Dependents = summary.Dependents.Select(d => new Dependent()
             {
+                Id = d.Id.GetValueOrDefault(),
                 EmployeeId = employee.Id,
                 Employee = employee,
                 FirstName = d.FirstName,
                 LastName = d.LastName,
                 Relationship = d.Relationship
             }).ToList();
-            await _benefitService.UpdateAsync(employee);
+            await _employeeRepository.UpdateAsync(employee);
 
-            return Ok();
+            return Ok(MapToSummaryVM(employee));
         }
 
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(Guid id)
         {
-            await _benefitService.DeleteAsync(id);
+            await _employeeRepository.DeleteAsync(id);
             return Ok();
+        }
+
+        private BenefitSummaryVM MapToSummaryVM(Employee employee)
+        {
+            return new BenefitSummaryVM()
+            {
+                Id = employee.Id,
+                FirstName = employee.FirstName,
+                LastName = employee.LastName,
+                Dependents = employee.Dependents.Select(d => MapToDependencyVM(d)).ToList(),
+                BenefitSummary = _benefitManager.GetBenefitSummary(employee)
+            };
+
+
+        }
+
+        private DependentVM MapToDependencyVM(Dependent dependent)
+        {
+            return new DependentVM()
+            {
+                Id = dependent.Id,
+                FirstName = dependent.FirstName,
+                LastName = dependent.LastName,
+                Relationship = dependent.Relationship
+            };
         }
     }
 }

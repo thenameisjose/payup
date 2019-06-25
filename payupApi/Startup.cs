@@ -32,8 +32,7 @@ namespace payupApi
                opt.UseInMemoryDatabase("Payup"));
 
             services.AddScoped<IEmployeeRepository, EmployeeRepository>();
-            services.AddScoped<IDependentRepository, DependentRepository>();
-            services.AddScoped<IBenefitService, BenefitService>();
+            services.AddScoped<IBenefitManager, BenefitManager>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             var clientUrl = Configuration.GetValue<string>("ClientUrl");

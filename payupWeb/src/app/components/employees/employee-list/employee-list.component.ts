@@ -55,11 +55,11 @@ export class EmployeeListComponent implements OnInit {
 
   updateEmployee(employee: Employee) {
     this.employeeService.updateEmployee(employee).subscribe(emp => {
-      let index = this.employees.findIndex(emp => emp.id == employee.id);
+      let index = this.employees.findIndex(e => e.id == employee.id);
       if (index > -1) {
         this.employees = [
           ...this.employees.slice(0, index),
-          employee,
+          emp,
           ...this.employees.slice(index + 1)
         ];
       }
@@ -125,6 +125,7 @@ export class EmployeeListComponent implements OnInit {
 
   loadEmployees() {
     this.employeeService.getAllEmployees().subscribe(employees => {
+      console.log({employees});
       this.employees = employees;
     });
   }
