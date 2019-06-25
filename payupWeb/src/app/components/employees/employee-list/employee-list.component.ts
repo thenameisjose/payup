@@ -22,7 +22,6 @@ export class EmployeeListComponent implements OnInit {
   }
 
   handleEditEmployee(employee: Employee) {
-    console.log(employee);
     this.editMode = true;
     this.selectedEmployee = employee;
     this.initForm();
@@ -31,9 +30,7 @@ export class EmployeeListComponent implements OnInit {
 
   handleDeleteEmployee(id: string) {
     this.employeeService.deleteEmployeeById(id).subscribe(_ => {
-      console.log(this.employees);
-      this.employees = this.employees.filter(e => e.id !== id);
-      console.log(this.employees);
+      this.employees = this.employees.filter(e => e.id !== id);      
     });
 
     this.initForm();
